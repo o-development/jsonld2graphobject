@@ -1,0 +1,45 @@
+{
+  "name": "jsonld2graphobject",
+  "version": "0.0.0",
+  "description": "Converts JSON-LD to an Object Literal Graph",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
+    "docs": "typedoc",
+    "prepublishOnly": "npm run test && npm run build && npm run docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o-development/jsonld2graphobject.git"
+  },
+  "author": "Jackson Morgan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/o-development/jsonld2graphobject/issues"
+  },
+  "homepage": "https://github.com/o-development/jsonld2graphobject#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.2",
+    "o-dataset-pack": "^0.2.0",
+    "prettier": "^2.5.0",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.7",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@rdfjs/types": "^1.0.1",
+    "@types/jsonld": "^1.5.6",
+    "jsonld": "^5.2.0"
+  }
+}
