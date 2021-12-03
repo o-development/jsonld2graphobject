@@ -18,7 +18,6 @@ describe("dataset2ObjectGraph", () => {
       dataset,
       libraryFrame
     );
-    console.log(JSON.stringify(libraryGraph, null, 2));
     expect(libraryGraph);
     expect(libraryGraph.location).toBe("Athens");
     expect(libraryGraph.contains[0].title).toBe("The Republic");

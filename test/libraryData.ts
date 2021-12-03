@@ -1,9 +1,21 @@
 import { NodeObject } from "jsonld";
 
-export const libraryFrame = {
+export const libraryFrame: NodeObject = {
   "@context": {
-    "@vocab": "http://example.org/",
-    contains: { "@id": "http://example.org/contains", "@type": "@id" },
+    Book: "http://example.org/Book",
+    Library: "http://example.org/Location",
+    location: "http://example.org/location",
+    contains: {
+      "@id": "http://example.org/contains",
+      "@container": "@set",
+      "@type": "@id",
+    },
+    creator: "http://example.org/creator",
+    title: "http://example.org/title",
+    foundIn: {
+      "@id": "http://example.org/foundIn",
+      "@type": "@id",
+    },
   },
   "@type": "Library",
   contains: {
@@ -25,13 +37,25 @@ export interface BookType extends NodeObject {
   "@type": "Book";
   creator: string;
   title: string;
-  foundIn: string;
+  foundIn: LibraryType;
 }
 
 export const flattenedLibrary = {
   "@context": {
-    "@vocab": "http://example.org/",
-    contains: { "@type": "@id" },
+    Book: "http://example.org/Book",
+    Library: "http://example.org/Location",
+    location: "http://example.org/location",
+    contains: {
+      "@id": "http://example.org/contains",
+      "@container": "@set",
+      "@type": "@id",
+    },
+    creator: "http://example.org/creator",
+    title: "http://example.org/title",
+    foundIn: {
+      "@id": "http://example.org/foundIn",
+      "@type": "@id",
+    },
   },
   "@graph": [
     {
