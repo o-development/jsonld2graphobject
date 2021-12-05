@@ -6,13 +6,13 @@
 
 ### Functions
 
-- [json2ObjectGraph](modules.md#json2objectgraph)
+- [jsonld2graphobject](modules.md#jsonld2graphobject)
 
 ## Functions
 
-### json2ObjectGraph
+### jsonld2graphobject
 
-▸ **json2ObjectGraph**<`ReturnType`\>(`jsonLd`, `node`): `Promise`<`ReturnType`\>
+▸ **jsonld2graphobject**<`ReturnType`\>(`jsonLd`, `node`): `Promise`<`ReturnType`\>
 
 Converts any JSON-LD object into object literals linked in a graph
 
@@ -35,4 +35,4 @@ Converts any JSON-LD object into object literals linked in a graph
 
 #### Defined in
 
-jsonld2ObjectGraph.ts:187
+jsonld2graphobject.ts:187

@@ -9,7 +9,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:lib/jsonld2ObjectGraph.ts
+SF:lib/jsonld2graphobject.ts
 FN:10,isObject
 FN:26,setTripleArcs
 FN:47,setScopedContext
@@ -21,7 +21,7 @@ FN:131,(anonymous_29)
 FN:131,(anonymous_30)
 FN:156,(anonymous_32)
 FN:156,(anonymous_33)
-FN:187,json2ObjectGraph
+FN:187,jsonld2graphobject
 FN:200,(anonymous_38)
 FN:201,(anonymous_39)
 FN:214,(anonymous_40)
@@ -40,7 +40,7 @@ FNDA:15,(anonymous_29)
 FNDA:15,(anonymous_30)
 FNDA:16,(anonymous_32)
 FNDA:16,(anonymous_33)
-FNDA:21,json2ObjectGraph
+FNDA:21,jsonld2graphobject
 FNDA:61,(anonymous_38)
 FNDA:70,(anonymous_39)
 FNDA:58,(anonymous_40)

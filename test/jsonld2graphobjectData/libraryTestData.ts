@@ -1,6 +1,6 @@
-import dataset2ObjectGraphTest from "./jsonld2ObjectGraphTest";
+import jsonld2graphobjectTest from "./jsonld2graphobjectTest";
 
-const libraryTestData: dataset2ObjectGraphTest[] = [
+const libraryTestData: jsonld2graphobjectTest[] = [
   {
     name: "handles a flat tree graph with context",
     testData: {

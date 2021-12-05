@@ -184,7 +184,7 @@ async function traverseNodesForIdsAndLeafs(
  * @param jsonLd The JSON-LD document
  * @param node The id of the node that should be returned as the root value
  */
-export async function json2ObjectGraph<ReturnType extends NodeObject>(
+export async function jsonld2graphobject<ReturnType extends NodeObject>(
   jsonLd: JsonLdDocument,
   node: string
 ): Promise<ReturnType> {

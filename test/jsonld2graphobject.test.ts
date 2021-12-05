@@ -1,10 +1,10 @@
-import { json2ObjectGraph } from "../lib";
-import libraryTestData from "./jsonld2ObjectGraphData/libraryTestData";
+import { jsonld2graphobject } from "../lib";
+import libraryTestData from "./jsonld2graphobjectData/libraryTestData";
 
 describe("dataset2ObjectGraph", () => {
   libraryTestData.forEach((testData) => {
     it(testData.name, async () => {
-      const graph = await json2ObjectGraph(
+      const graph = await jsonld2graphobject(
         testData.testData,
         testData.testNode
       );
@@ -14,7 +14,7 @@ describe("dataset2ObjectGraph", () => {
 
   it("errors if a node not in the graph is given", async () => {
     await expect(async () => {
-      await json2ObjectGraph(
+      await jsonld2graphobject(
         {
           "@context": { "@vocab": "http://example.org/" },
           "@id": "http://example.org/library",

@@ -1,1 +1,1 @@
-export * from "./jsonld2ObjectGraph";
+export * from "./jsonld2graphobject";

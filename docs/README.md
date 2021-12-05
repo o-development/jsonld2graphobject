@@ -25,7 +25,7 @@ The above example is not a true graph, as the `friend` field in `friend2` is sim
 ## Intallation
 
 ```bash
-npm i jsonld2objectgraph
+npm i jsonld2graphobject
 ```
 
 ## Usage
@@ -33,10 +33,10 @@ npm i jsonld2objectgraph
 Provide any compliant JSON-LD document as well as the id for the return node.
 
 ```javascript
-import { jsonld2ObjectGraph } from "jsonld2objectgraph";
+import { jsonld2graphobject } from "jsonld2graphobject";
 
 async function run() {
-  const friend1 = jsonld2ObjectGraph(
+  const friend1 = jsonld2graphobject(
     {
       "@context": {
         "friend": { "@type": "@id" }
