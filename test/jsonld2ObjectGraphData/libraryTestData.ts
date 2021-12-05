@@ -1,4 +1,4 @@
-import dataset2ObjectGraphTest from "./dataset2ObjectGraphTest";
+import dataset2ObjectGraphTest from "./jsonld2ObjectGraphTest";
 
 const libraryTestData: dataset2ObjectGraphTest[] = [
   {
@@ -188,7 +188,6 @@ const libraryTestData: dataset2ObjectGraphTest[] = [
     },
     testNode: "http://example.org/library",
     expect: async (result) => {
-      console.log(result);
       expect(result);
       expect(result["@id"]).toBe("http://example.org/library");
       expect(result.location).toBe("Athens");

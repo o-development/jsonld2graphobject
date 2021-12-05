@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1638664722357" clover="3.2.0">
-  <project timestamp="1638664722357" name="All files">
+<coverage generated="1638666142790" clover="3.2.0">
+  <project timestamp="1638666142790" name="All files">
     <metrics statements="79" coveredstatements="79" conditionals="50" coveredconditionals="50" methods="17" coveredmethods="17" elements="146" coveredelements="146" complexity="0" loc="79" ncloc="79" packages="1" files="2" classes="2"/>
-    <file name="index.ts" path="/Users/jackson/O/jsonld2graphobject/src/index.ts">
+    <file name="index.ts" path="/Users/jackson/O/jsonld2graphobject/lib/index.ts">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
     </file>
-    <file name="jsonld2ObjectGraph.ts" path="/Users/jackson/O/jsonld2graphobject/src/jsonld2ObjectGraph.ts">
+    <file name="jsonld2ObjectGraph.ts" path="/Users/jackson/O/jsonld2graphobject/lib/jsonld2ObjectGraph.ts">
       <metrics statements="78" coveredstatements="78" conditionals="50" coveredconditionals="50" methods="17" coveredmethods="17"/>
       <line num="2" count="1" type="stmt"/>
       <line num="6" count="1" type="stmt"/>

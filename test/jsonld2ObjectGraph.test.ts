@@ -1,5 +1,5 @@
-import { json2ObjectGraph } from "../src";
-import libraryTestData from "./dataset2ObjectGraphData/libraryTestData";
+import { json2ObjectGraph } from "../lib";
+import libraryTestData from "./jsonld2ObjectGraphData/libraryTestData";
 
 describe("dataset2ObjectGraph", () => {
   libraryTestData.forEach((testData) => {
