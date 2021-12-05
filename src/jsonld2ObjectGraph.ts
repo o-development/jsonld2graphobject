@@ -122,18 +122,20 @@ async function traverseNodesForIdsAndLeafs(
   // Traverse the keys of this Object
   await Promise.all(
     Object.entries(object).map(async ([key, value]) => {
-      if (key === "@graph" && Array.isArray(value)) {
+      if (key === "@graph") {
+        // TODO: handle the case the a graph is a string
+        const graph: NodeObject[] = (
+          Array.isArray(value) ? value : [value]
+        ) as NodeObject[];
         await Promise.all(
-          value.map(async (graphValue) => {
-            if (isObject(graphValue)) {
-              await traverseNodesForIdsAndLeafs(
-                graphValue,
-                idMap,
-                tripleArcs,
-                scopedContext,
-                idPredicates
-              );
-            }
+          graph.map(async (graphValue: NodeObject) => {
+            await traverseNodesForIdsAndLeafs(
+              graphValue,
+              idMap,
+              tripleArcs,
+              scopedContext,
+              idPredicates
+            );
           })
         );
       }
@@ -222,9 +224,9 @@ export async function json2ObjectGraph<ReturnType extends NodeObject>(
 
       // Build the object links
       Object.entries(subjectInfo.predicates).forEach(
-        ([predicate, objectInfos]) => {
+        ([predicate, objectIds]) => {
           if (
-            objectInfos.length === 1 &&
+            objectIds.length === 1 &&
             // Is not a container predicate
             !(
               subject["@context"] &&
@@ -234,21 +236,17 @@ export async function json2ObjectGraph<ReturnType extends NodeObject>(
               ]
             )
           ) {
-            subject[predicate] = consolodatedIdMap[objectInfos[0]];
+            subject[predicate] =
+              consolodatedIdMap[objectIds[0]] || objectIds[0];
           } else {
-            subject[predicate] = objectInfos.map(
-              (objectInfo) => consolodatedIdMap[objectInfo]
+            subject[predicate] = objectIds.map(
+              (objectId) => consolodatedIdMap[objectId] || objectId
             );
           }
         }
       );
     })
   );
-
-  // Provide context if not provided
-  if (jsonLdClone["@context"] && !nodeToReturn["@context"]) {
-    nodeToReturn["@context"] = jsonLdClone["@context"];
-  }
 
   return nodeToReturn as ReturnType;
 }
