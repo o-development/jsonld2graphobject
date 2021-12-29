@@ -70,6 +70,30 @@ async function combineContexts(
 }
 
 /**
+ *
+ */
+function getObjectId(
+  object: NodeObject,
+  scopedContext?: IJsonLdContextNormalizedRaw
+): string {
+  if (object["@id"]) {
+    return object["@id"];
+  } else if (scopedContext) {
+    const mappedIdEntry = Object.entries(scopedContext).find(
+      ([, value]) => value === "@id"
+    );
+    if (
+      mappedIdEntry &&
+      object[mappedIdEntry[0]] &&
+      typeof object[mappedIdEntry[0]] === "string"
+    ) {
+      return object[mappedIdEntry[0]] as string;
+    }
+  }
+  return v4();
+}
+
+/**
  * Recursively traverses an object to fill out the idMap and tripleArcs
  * @param object The object to traverse
  * @param idMap A map between the object Id and a collection of objects representing it
@@ -113,7 +137,7 @@ async function traverseNodesForIdsAndLeafs(
   }
 
   // Record this node's Id
-  const objectId = object["@id"] || v4();
+  const objectId = getObjectId(object, scopedContext);
   if (!idMap[objectId]) {
     idMap[objectId] = [];
   }
@@ -152,22 +176,37 @@ async function traverseNodesForIdsAndLeafs(
         );
         setTripleArcs(tripleArcs, objectId, key, valueId);
       } else if (Array.isArray(value)) {
-        await Promise.all(
-          value.map(async (arrValue) => {
-            if (isObject(arrValue)) {
-              const valueId = await traverseNodesForIdsAndLeafs(
-                arrValue as NodeObject,
-                idMap,
-                tripleArcs,
-                scopedContext,
-                idPredicates
-              );
-              setTripleArcs(tripleArcs, objectId, key, valueId);
-            } else if (typeof arrValue === "string" && idPredicates.has(key)) {
-              setTripleArcs(tripleArcs, objectId, key, arrValue as string);
-            }
-          })
+        const setTripleArcsParams = (
+          await Promise.all<Parameters<typeof setTripleArcs> | undefined>(
+            value.map(
+              async (
+                arrValue
+              ): Promise<Parameters<typeof setTripleArcs> | undefined> => {
+                if (isObject(arrValue)) {
+                  const valueId = await traverseNodesForIdsAndLeafs(
+                    arrValue as NodeObject,
+                    idMap,
+                    tripleArcs,
+                    scopedContext,
+                    idPredicates
+                  );
+                  return [tripleArcs, objectId, key, valueId];
+                } else if (
+                  typeof arrValue === "string" &&
+                  idPredicates.has(key)
+                ) {
+                  return [tripleArcs, objectId, key, arrValue as string];
+                }
+              }
+            )
+          )
+        ).filter<Parameters<typeof setTripleArcs>>(
+          (value): value is Parameters<typeof setTripleArcs> =>
+            value !== undefined
         );
+        setTripleArcsParams.forEach((params) => {
+          setTripleArcs(...params);
+        });
       } else if (typeof value === "string" && idPredicates.has(key)) {
         setTripleArcs(tripleArcs, objectId, key, value);
       }

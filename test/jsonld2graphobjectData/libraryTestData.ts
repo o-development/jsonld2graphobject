@@ -1,4 +1,5 @@
 import jsonld2graphobjectTest from "./jsonld2graphobjectTest";
+import kitchenSink from "shex-test/schemas/kitchenSink.json";
 
 const libraryTestData: jsonld2graphobjectTest[] = [
   {
@@ -652,9 +653,9 @@ const libraryTestData: jsonld2graphobjectTest[] = [
       expect(result.friend.element).toBe("water");
       expect(result.bendingTeacher.friendshipStarted).toBe("100AG");
       expect(Array.isArray(result.friend.friend));
-      expect(result.friend.friend[0]["@id"]).toBe("http://example.com/sokka");
-      expect(result.friend.friend[1]["@id"]).toBe("http://example.com/zuko");
-      expect(result.friend.friend[2]["@id"]).toBe("http://example.com/toph");
+      expect(result.friend.friend[0]["@id"]).toBe("http://example.com/toph");
+      expect(result.friend.friend[1]["@id"]).toBe("http://example.com/sokka");
+      expect(result.friend.friend[2]["@id"]).toBe("http://example.com/zuko");
     },
   },
 
@@ -844,6 +845,42 @@ const libraryTestData: jsonld2graphobjectTest[] = [
       expect(result.image.caption).toBe("Cool Pic");
       expect(result["@context"]).toMatchObject(expectedContext);
       expect(result.image["@context"]).toMatchObject(expectedContext);
+    },
+  },
+  {
+    name: "handles mapped id fields in context",
+    testData: {
+      "@context": {
+        id: "@id",
+        friend: {
+          "@id": "http://example.com/friend",
+          "@type": "@id",
+        },
+      },
+      id: "https://example.com/sokka",
+      friend: {
+        id: "https://example.com/zuko",
+        friend: "https://example.com/sokka",
+      },
+    },
+    testNode: "https://example.com/sokka",
+    expect: async (resultingObject) => {
+      expect(resultingObject.friend.friend.id).toBe(
+        "https://example.com/sokka"
+      );
+    },
+  },
+
+  {
+    name: "handles a complex object",
+    testData: { "@id": "SCHEMA", ...kitchenSink },
+    testNode: "SCHEMA",
+    expect: async (resultingObject) => {
+      expect(resultingObject["@id"]).toBe("SCHEMA");
+      expect(
+        resultingObject.shapes[0].expression.expressions[2].valueExpr
+          .shapeExprs[1].type
+      ).toBe("Shape");
     },
   },
 
