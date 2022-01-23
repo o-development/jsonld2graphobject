@@ -45,7 +45,8 @@ async function run() {
         "friend": "http://example.com/friend1"
       }
     },
-    "http://example.com/friend1"
+    "http://example.com/friend1",
+    { excludeContext: false } // excludeContext defaults to false
   );
   // Prints friend 1
   console.log(friend1.friend.friend.friend.friend.friend.friend.friend.friend.friend.friend);

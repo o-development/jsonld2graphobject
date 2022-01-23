@@ -225,7 +225,8 @@ async function traverseNodesForIdsAndLeafs(
  */
 export async function jsonld2graphobject<ReturnType extends NodeObject>(
   jsonLd: JsonLdDocument,
-  node: string
+  node: string,
+  options?: { excludeContext: boolean }
 ): Promise<ReturnType> {
   const jsonLdClone = JSON.parse(JSON.stringify(jsonLd));
 
@@ -284,6 +285,9 @@ export async function jsonld2graphobject<ReturnType extends NodeObject>(
           }
         }
       );
+      if (options?.excludeContext) {
+        delete subject["@context"];
+      }
     })
   );
 

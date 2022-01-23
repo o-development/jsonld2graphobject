@@ -12,7 +12,7 @@
 
 ### jsonld2graphobject
 
-▸ **jsonld2graphobject**<`ReturnType`\>(`jsonLd`, `node`): `Promise`<`ReturnType`\>
+▸ **jsonld2graphobject**<`ReturnType`\>(`jsonLd`, `node`, `options?`): `Promise`<`ReturnType`\>
 
 Converts any JSON-LD object into object literals linked in a graph
 
@@ -28,6 +28,8 @@ Converts any JSON-LD object into object literals linked in a graph
 | :------ | :------ | :------ |
 | `jsonLd` | `JsonLdDocument` | The JSON-LD document |
 | `node` | `string` | The id of the node that should be returned as the root value |
+| `options?` | `Object` | - |
+| `options.excludeContext` | `boolean` | - |
 
 #### Returns
 
@@ -35,4 +37,4 @@ Converts any JSON-LD object into object literals linked in a graph
 
 #### Defined in
 
-jsonld2graphobject.ts:187
+[jsonld2graphobject.ts:226](https://github.com/o-development/jsonld2graphobject/blob/5c194a1/lib/jsonld2graphobject.ts#L226)

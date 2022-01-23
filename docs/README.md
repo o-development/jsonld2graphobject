@@ -36,7 +36,7 @@ Provide any compliant JSON-LD document as well as the id for the return node.
 import { jsonld2graphobject } from "jsonld2graphobject";
 
 async function run() {
-  const friend1 = jsonld2graphobject(
+  const friend1 = await jsonld2graphobject(
     {
       "@context": {
         "friend": { "@type": "@id" }
@@ -47,7 +47,8 @@ async function run() {
         "friend": "http://example.com/friend1"
       }
     },
-    "http://example.com/friend1"
+    "http://example.com/friend1",
+    { excludeContext: false } // excludeContext defaults to false
   );
   // Prints friend 1
   console.log(friend1.friend.friend.friend.friend.friend.friend.friend.friend.friend.friend);

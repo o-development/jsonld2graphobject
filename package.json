@@ -1,6 +1,6 @@
 {
   "name": "jsonld2graphobject",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Converts JSON-LD to an Object Literal Graph",
   "main": "dist/index.js",
   "scripts": {
@@ -42,7 +42,6 @@
   "dependencies": {
     "@rdfjs/types": "^1.0.1",
     "@types/jsonld": "^1.5.6",
-    "jsonld": "^5.2.0",
     "jsonld-context-parser": "^2.1.5",
     "uuid": "^8.3.2"
   }

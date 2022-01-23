@@ -37,4 +37,30 @@ describe("dataset2ObjectGraph", () => {
       );
     }).rejects.toBeInstanceOf(Error);
   });
+
+  it("excludes context", async () => {
+    const result = await jsonld2graphobject(
+      {
+        "@context": { "@vocab": "http://example.org/" },
+        "@id": "http://example.org/library",
+        "@type": "Library",
+        location: "Athens",
+        contains: {
+          "@id": "http://example.org/library/the-republic",
+          "@type": "Book",
+          creator: "Plato",
+          title: "The Republic",
+          contains: {
+            "@id": "http://example.org/library/the-republic#introduction",
+            "@type": "Chapter",
+            description: "An introductory chapter on The Republic.",
+            title: "The Introduction",
+          },
+        },
+      },
+      "http://example.org/library",
+      { excludeContext: true }
+    );
+    expect(result["@context"]).toBe(undefined);
+  });
 });
