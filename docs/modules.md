@@ -37,4 +37,4 @@ Converts any JSON-LD object into object literals linked in a graph
 
 #### Defined in
 
-[jsonld2graphobject.ts:226](https://github.com/o-development/jsonld2graphobject/blob/5c194a1/lib/jsonld2graphobject.ts#L226)
+[jsonld2graphobject.ts:235](https://github.com/o-development/jsonld2graphobject/blob/4c9bf6b/lib/jsonld2graphobject.ts#L235)

@@ -884,6 +884,47 @@ const libraryTestData: jsonld2graphobjectTest[] = [
     },
   },
 
+  {
+    name: "handles context without the @container attribute, and it refers to a type with only one instance, but it is in an array.",
+    testData: {
+      "@context": {
+        Book: "http://example.org/Book",
+        Library: "http://example.org/Location",
+        location: "http://example.org/location",
+        contains: {
+          "@id": "http://example.org/contains",
+          "@type": "@id",
+        },
+        creator: "http://example.org/creator",
+        title: "http://example.org/title",
+        foundIn: {
+          "@id": "http://example.org/foundIn",
+          "@type": "@id",
+        },
+      },
+      "@id": "http://example.org/library",
+      "@type": "Library",
+      location: "Athens",
+      contains: [
+        {
+          "@id": "http://example.org/library/the-republic",
+          "@type": "Book",
+          creator: "Plato",
+          title: "The Republic",
+          foundIn: "http://example.org/library",
+        },
+      ],
+    },
+    testNode: "http://example.org/library",
+    expect: async (result) => {
+      expect(result);
+      expect(result["@id"]).toBe("http://example.org/library");
+      expect(result.location).toBe("Athens");
+      expect(result.contains[0].title).toBe("The Republic");
+      expect(result.contains[0].foundIn).toBe(result);
+    },
+  },
+
   // TODO: test case where a graph is a string
   // TODO: test case where a graph has an id (named graphs)
 ];

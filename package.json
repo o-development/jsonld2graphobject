@@ -1,6 +1,6 @@
 {
   "name": "jsonld2graphobject",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Converts JSON-LD to an Object Literal Graph",
   "main": "dist/index.js",
   "scripts": {

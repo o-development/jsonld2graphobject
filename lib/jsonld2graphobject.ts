@@ -17,6 +17,9 @@ interface TripleArcs {
     predicates: {
       [predicateId: string]: string[];
     };
+    originallyInArray: {
+      [predicateId: string]: true;
+    };
   };
 }
 
@@ -27,18 +30,23 @@ function setTripleArcs(
   tripleArcs: TripleArcs,
   subjectId: string,
   predicateId: string,
-  objectId: string
+  objectId: string,
+  isArray: boolean
 ) {
   if (!tripleArcs[subjectId]) {
     tripleArcs[subjectId] = {
       scopedContexts: [],
       predicates: {},
+      originallyInArray: {},
     };
   }
   if (!tripleArcs[subjectId].predicates[predicateId]) {
     tripleArcs[subjectId].predicates[predicateId] = [];
   }
   tripleArcs[subjectId].predicates[predicateId].push(objectId);
+  if (isArray) {
+    tripleArcs[subjectId].originallyInArray[predicateId] = true;
+  }
 }
 
 /**
@@ -53,6 +61,7 @@ function setScopedContext(
     tripleArcs[subjectId] = {
       scopedContexts: [],
       predicates: {},
+      originallyInArray: {},
     };
   }
   if (scopedContext) {
@@ -174,7 +183,7 @@ async function traverseNodesForIdsAndLeafs(
           scopedContext,
           idPredicates
         );
-        setTripleArcs(tripleArcs, objectId, key, valueId);
+        setTripleArcs(tripleArcs, objectId, key, valueId, false);
       } else if (Array.isArray(value)) {
         const setTripleArcsParams = (
           await Promise.all<Parameters<typeof setTripleArcs> | undefined>(
@@ -190,12 +199,12 @@ async function traverseNodesForIdsAndLeafs(
                     scopedContext,
                     idPredicates
                   );
-                  return [tripleArcs, objectId, key, valueId];
+                  return [tripleArcs, objectId, key, valueId, true];
                 } else if (
                   typeof arrValue === "string" &&
                   idPredicates.has(key)
                 ) {
-                  return [tripleArcs, objectId, key, arrValue as string];
+                  return [tripleArcs, objectId, key, arrValue as string, true];
                 }
               }
             )
@@ -208,7 +217,7 @@ async function traverseNodesForIdsAndLeafs(
           setTripleArcs(...params);
         });
       } else if (typeof value === "string" && idPredicates.has(key)) {
-        setTripleArcs(tripleArcs, objectId, key, value);
+        setTripleArcs(tripleArcs, objectId, key, value, false);
       }
     })
   );
@@ -274,7 +283,9 @@ export async function jsonld2graphobject<ReturnType extends NodeObject>(
               (subject["@context"] as IJsonLdContextNormalizedRaw)[predicate][
                 "@container"
               ]
-            )
+            ) &&
+            // Was not originally in an array
+            !subjectInfo.originallyInArray[predicate]
           ) {
             subject[predicate] =
               consolodatedIdMap[objectIds[0]] || objectIds[0];
