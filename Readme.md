@@ -1,3 +1,5 @@
+> :warning: **This repository is archived**: It's contents have been moved to a new [monorepo](https://github.com/o-development/ldo/).
+
 # JSON 2 Graph Object
 
 JSON-LD makes working with RDF easier, but it forces data into a tree structure. JSON 2 Graph Object makes a true graph from Object literals.
